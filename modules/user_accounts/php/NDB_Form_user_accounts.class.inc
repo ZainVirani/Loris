@@ -726,6 +726,7 @@ class NDB_Form_User_Accounts extends NDB_Form
 
         // active
         $this->addSelect('Active', 'Active', array('Y' => 'Yes', 'N' => 'No'));
+        /* the original Pending_approval select element
         $this->addSelect(
             'Pending_approval',
             'Pending approval',
@@ -734,6 +735,10 @@ class NDB_Form_User_Accounts extends NDB_Form
              'N' => 'No',
             )
         );
+        */
+        $pendGroup[] = $this->createRadio("Pending_approval", "Yes", array('value'=>'Y'));
+        $pendGroup[] = $this->createRadio("Pending_approval", "No", array('value'=>'N'));
+        $this->addGroup($pendGroup, 'Pending_approval_Group', 'Pending Approval:', $this->_GUIDelimiter, false);
 
         //------------------------------------------------------------
 
