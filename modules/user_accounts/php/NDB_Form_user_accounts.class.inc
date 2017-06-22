@@ -736,10 +736,12 @@ class NDB_Form_User_Accounts extends NDB_Form
             )
         );
         */
+        /*
         $pendGroup[] = $this->createRadio("Pending_approval", "Yes", array('value'=>'Y'));
         $pendGroup[] = $this->createRadio("Pending_approval", "No", array('value'=>'N'));
         $this->addGroup($pendGroup, 'Pending_approval_Group', 'Pending Approval:', $this->_GUIDelimiter, false);
-
+        */
+        $this->addRadio('Pending_approval', 'Pending approval:', array(array('label'=>'Yes','value'=>'Y'),array('label'=>'No','value'=>'N')));//,array('lol'=>'argh'));
         //------------------------------------------------------------
 
         // get the editor's permissions

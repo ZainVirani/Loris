@@ -282,22 +282,33 @@ class NDB_Page
     /**
      * Wrapper to create a radio button
      *
-     * @param string $name     The field name of this radio button
-     * @param string $label    The label to attach to this radio button
-     * @param array  $options  Options to pass to QuickForm for this
-     *                         radio button
-     * @param array  $optional Optional extra HTML attributes to add
-     *                         to the radio button
+     * @param string $name          The field name of this radio button
+     * @param string $groupLabel    The label to attach to this group of 
+     *                              radio buttons
+     * @param array  $radios        The array of arrays describing radio
+     *                              elements to be added as a group. Ex:
+     *                              array('label'=>'Yes','value'=>'Y')
+     * @param array  $options       Options to pass to LorisForm for this
+     *                              radio button. Do not pass value here.
      *
      * @return none
      */
-    function addRadio($name, $label, $options, $optional=array())
+    function addRadio($name, $groupLabel, $radios, $options = null)
     {
-        $optional = array_merge(
-            array('class' => 'form-control input-sm'),
-            $optional
-        );
-        $this->form->addElement('radio', $name, $label, $options, $optional);
+        foreach ($radios as $radElement) {
+            if ($options === null) {
+                $tempOptions = array('class'=>'form-control input-sm',
+                                     'value'=>$radElement['value']);
+            } else {
+                $tempOptions = array_merge(
+            	    array('class'=>'form-control input-sm',
+                          'value'=>$radElement['value']),
+				    $options
+			    );
+            }
+            $radGroup[] = $this->createRadio($name, $radElement['label'], $tempOptions);
+        }
+        $this->addGroup($radGroup, $name . '_group',$groupLabel, null, false);
     }
 
     /**
@@ -539,7 +550,7 @@ class NDB_Page
      *
      * @param string $field   The fieldname for this radio button
      * @param string $label   The label to attach to this radio button
-     * @param string $options Options to pass to HTML_QuickForm
+     * @param string $options Options to pass to LorisForm
      *
      * @return QuickForm_Element representing radio button
      */
