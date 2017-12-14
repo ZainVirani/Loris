@@ -111,7 +111,7 @@ Where each key should be interpreted as so:
 # 2.0: Page Elements
 
 PageElements represent an individual element in an instrument such as a select box or textbox.
-Each type of element may contain type specific options and formulas. Formulas are written in the LORIS Logic Parser language syntax. In general, a PageElement object has
+Each type of element may contain type specific options and formulas. Formulas are written in the [LORIS Logic Parser](LogicParser.md) language syntax. In general, a PageElement object has
 the following format:
 
 
