@@ -154,7 +154,6 @@ class Stats_Demographic extends \NDB_Form
     function setup()
     {
         parent::setup();
-
         $DB          =& \Database::singleton();
         $config      = \NDB_Config::singleton();
         $useProjects = $config->getSetting("useProjects");
@@ -194,7 +193,8 @@ class Stats_Demographic extends \NDB_Form
         $subprojList      = '';
         $subproject_query = '';
         $Visits           = \Utility::getExistingVisitLabels($demographicProject);
-        $subprojects      = \Utility::getSubprojectsForProject($currentProject);
+        $subprojects      = \Utility::getSubprojectsForProject($demographicProject);
+        $this->params     = array();
 
         if (empty($subprojects)) {
             error_log('Could not load subproject data for demographic stats');
@@ -235,7 +235,7 @@ class Stats_Demographic extends \NDB_Form
         } else {
             foreach ($centers as $row) {
                 $sites[$row['NumericID']] = $row['ShortName'];
-                if ($_REQUEST['DemographicSite'] == $row['NumericID']) {
+                if ($demographicSite == $row['NumericID']) {
                     $this->tpl_data['CurrentSite'] = array(
                                                       'ID'   => $row['NumericID'],
                                                       'Name' => $row['LongName'],
@@ -335,7 +335,7 @@ class Stats_Demographic extends \NDB_Form
             $this->params
         );
 
-                $this->tpl_data['gender_male']['total'] = 0;
+        $this->tpl_data['gender_male']['total'] = 0;
         foreach ($result as $row) {
             $this->tpl_data['gender_male'][$row['rowid']] = $row['val'];
             $this->tpl_data['gender_male']['total']      += $row['val'];
