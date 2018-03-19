@@ -99,16 +99,16 @@ class Statistics_Site extends \NDB_Form
         $this->_checkCriteria($centerID, $projectID);
         $DB    =& \Database::singleton();
         $count = $DB->pselectOne(
-            "SELECT count(s.CandID)  FROM session s, 
-                candidate c, flag f, {$instrument} i 
-                WHERE s.ID=f.SessionID AND f.CommentID=i.CommentID 
-                AND s.CandID=c.CandID  
-                AND s.Active='Y' 
-                AND s.CenterID <> '1' 
-                $this->query_criteria 
-                AND f.Data_entry='Complete' 
+            "SELECT count(s.CandID)  FROM session s,
+                candidate c, flag f, {$instrument} i
+                WHERE s.ID=f.SessionID AND f.CommentID=i.CommentID
+                AND s.CandID=c.CandID
+                AND s.Active='Y'
+                AND s.CenterID <> '1'
+                $this->query_criteria
+                AND f.Data_entry='Complete'
                 AND s.Current_stage <> 'Recycling Bin'
-                AND f.Administration='All' 
+                AND f.Administration='All'
                 AND i.CommentID NOT LIKE 'DDE%'",
             $this->query_vars
         );
@@ -129,17 +129,17 @@ class Statistics_Site extends \NDB_Form
         $this->_checkCriteria($centerID, $projectID);
         $DB     =& \Database::singleton();
         $result = $DB->pselect(
-            "SELECT s.CandID, f.SessionID, i.CommentID, c.PSCID, 
-               s.Visit_label 
-               FROM session s, candidate c, flag  f, 
-               {$instrument} i 
-               WHERE s.ID=f.SessionID AND f.CommentID=i.CommentID 
-               AND s.CandID=c.CandID  
-               AND s.Active='Y' 
-               AND s.CenterID <> '1' 
+            "SELECT s.CandID, f.SessionID, i.CommentID, c.PSCID,
+               s.Visit_label
+               FROM session s, candidate c, flag  f,
+               {$instrument} i
+               WHERE s.ID=f.SessionID AND f.CommentID=i.CommentID
+               AND s.CandID=c.CandID
+               AND s.Active='Y'
+               AND s.CenterID <> '1'
                AND s.Current_stage <> 'Recycling Bin'
                $this->query_criteria
-               AND (f.Data_entry is NULL OR f.Data_entry<>'Complete') 
+               AND (f.Data_entry is NULL OR f.Data_entry<>'Complete')
                AND i.CommentID NOT LIKE 'DDE%' ORDER BY s.Visit_label, c.PSCID",
             $this->query_vars
         );
