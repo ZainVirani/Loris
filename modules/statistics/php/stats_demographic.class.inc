@@ -202,7 +202,7 @@ class Stats_Demographic extends \NDB_Form
         }
 
         //SITES
-        $demographicSite = $_REQUEST['DemographicSide'] ?? '';
+        $demographicSite = $_REQUEST['DemographicSite'] ?? '';
         $demographicSite = htmlspecialchars($demographicSite);
         $Param_Site      = '';
 
