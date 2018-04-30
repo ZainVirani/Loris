@@ -189,7 +189,16 @@ class AddSurvey extends \NDB_Form
         $battery = new \NDB_BVL_Battery();
         $battery->selectBattery($SessionID);
 
-        $commentID = $battery->addInstrument($values['Test_name']);
+        $commentID = $db->pselectOne(
+            "SELECT CommentID FROM flag
+            WHERE SessionID=:SID
+            AND Test_name=:TN
+            AND CommentID NOT LIKE 'DDE%'",
+            array(
+             'TN'  => $values['Test_name'],
+             'SID' => $SessionID,
+            )
+        ) ?? $battery->addInstrument($values['Test_name']);
 
         $key = $this->_generateSurveyKey();
 
