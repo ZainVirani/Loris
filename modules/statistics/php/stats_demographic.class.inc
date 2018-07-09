@@ -192,13 +192,8 @@ class Stats_Demographic extends \NDB_Form
         $subprojects     = \Utility::getSubprojectsForProject($project);
 
         if (!empty($subprojects)) {
-            foreach ($subprojects as $key=>$val) {
-                $subprojList .= "$key,";
-            }
-            $subprojList = substr($subprojList, 0, -1);
-            if (!empty($subprojList)) {
-                $subprojectQuery = "AND s.SubprojectID IN ($subprojList)";
-            }
+            $subprojList = implode(',', $subprojects);
+            $subprojectQuery = "AND s.SubprojectID IN ($subprojList)";
         }
 
         //SITES
@@ -241,7 +236,11 @@ class Stats_Demographic extends \NDB_Form
         $this->tpl_data['Subprojects'] = $subprojects;
         $this->tpl_data['Visits']      = $visits;
 
-        //REGISTERED CANDIDATES ROW
+        /**
+         * REGISTERED CANDIDATES ROW
+         * $paramProject and $paramSite are hardcoded strings,
+         * and should be safe from SQL injection
+        **/
         $result = $db->pselect(
             "SELECT s.subprojectid as rowid,
                     count(DISTINCT(c.PSCID)) as val
