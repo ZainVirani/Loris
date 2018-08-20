@@ -41,11 +41,13 @@ class Statistics_Site extends \NDB_Menu
         $user     =& \User::singleton();
         $centerID = htmlspecialchars($_REQUEST['CenterID']);
         //TODO: Create a permission specific to statistics
+        if (is_null($centerID)) {
+            error_log("CenterID passed in statistics module is null.");
+        }
         $accessAllProfiles = $user->hasPermission('access_all_profiles') &&
             $user->hasPermission('data_entry');
         return $user->hasCenterPermission('data_entry', $centerID) ||
             $accessAllProfiles;
-
     }
 
     /**
